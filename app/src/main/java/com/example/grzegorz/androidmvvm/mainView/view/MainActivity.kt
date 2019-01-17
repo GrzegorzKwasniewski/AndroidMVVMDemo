@@ -1,7 +1,10 @@
-package com.example.grzegorz.androidmvvm
+package com.example.grzegorz.androidmvvm.mainView.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.grzegorz.androidmvvm.R
+import com.example.grzegorz.androidmvvm.helpers.getViewModel
+import com.example.grzegorz.androidmvvm.mainView.viewModel.MainViewModel
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -9,7 +12,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    var disposable: Disposable? = null
+    // View Model
+
+    private val viewModel by lazy { getViewModel<MainViewModel>() }
+
+    // Private Properties
+
+    private var disposable: Disposable? = null
+
+    // View Life Cycle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
