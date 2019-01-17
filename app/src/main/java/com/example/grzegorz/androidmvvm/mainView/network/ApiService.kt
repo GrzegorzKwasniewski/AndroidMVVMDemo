@@ -9,9 +9,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiService {
 
-    val baseUrl = "https://api.coinmarketcap.com/"
+    // Private Properties
 
-    fun getAllCoins(): Observable<List<CoinModel>> {
+    private val baseUrl = "https://api.coinmarketcap.com/"
+
+    // Internal Methods
+
+    internal fun getAllCoins(): Observable<List<CoinModel>> {
 
         val retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))

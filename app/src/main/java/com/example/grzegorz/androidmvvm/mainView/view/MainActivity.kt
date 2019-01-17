@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.grzegorz.androidmvvm.R
 import com.example.grzegorz.androidmvvm.helpers.getViewModel
+import com.example.grzegorz.androidmvvm.helpers.subscribe
+import com.example.grzegorz.androidmvvm.mainView.model.CoinModel
 import com.example.grzegorz.androidmvvm.mainView.viewModel.MainViewModel
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -26,15 +28,27 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        bindUI()
+
         disposable = downloadButton.clicks()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                println("click")
+                viewModel.getCoinsData()
             }
     }
 
     override fun onPause() {
         disposable?.dispose()
         super.onPause()
+    }
+
+    // Private Methods
+
+    private fun bindUI() {
+        viewModel.coins.subscribe(this, this::showAllCoins)
+    }
+
+    private fun showAllCoins(coins: List<CoinModel>) {
+
     }
 }
