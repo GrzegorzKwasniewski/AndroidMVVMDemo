@@ -28,13 +28,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        bindUI()
-
-        disposable = downloadButton.clicks()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                viewModel.getCoinsData()
-            }
+        bindUIData()
+        bindUIGestures()
     }
 
     override fun onPause() {
@@ -44,11 +39,19 @@ class MainActivity : AppCompatActivity() {
 
     // Private Methods
 
-    private fun bindUI() {
+    private fun bindUIData() {
         viewModel.coins.subscribe(this, this::showAllCoins)
     }
 
     private fun showAllCoins(coins: List<CoinModel>) {
 
+    }
+
+    private fun bindUIGestures() {
+        disposable = downloadButton.clicks()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                viewModel.getCoinsData()
+            }
     }
 }
