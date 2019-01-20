@@ -4,13 +4,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.grzegorz.androidmvvm.helpers.withProgress
 import com.example.grzegorz.androidmvvm.mainView.model.CoinModel
-import com.example.grzegorz.androidmvvm.mainView.network.ApiService
+import com.example.grzegorz.androidmvvm.mainView.network.ApiServiceInterface
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class MainViewModel(
-    private val apiService: ApiService
+    private val apiService: ApiServiceInterface
 ): ViewModel() {
 
     // Internal Properties

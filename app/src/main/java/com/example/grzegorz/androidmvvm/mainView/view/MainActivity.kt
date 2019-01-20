@@ -23,7 +23,7 @@ class MainActivity: AppCompatActivity() {
     // Private Properties
 
     private var disposable: Disposable? = null
-    private lateinit var linearLayoutManager: LinearLayoutManager
+    private var linearLayoutManager = LinearLayoutManager(this)
 
     // View Life Cycle
 
@@ -57,7 +57,6 @@ class MainActivity: AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        linearLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = linearLayoutManager
     }
 

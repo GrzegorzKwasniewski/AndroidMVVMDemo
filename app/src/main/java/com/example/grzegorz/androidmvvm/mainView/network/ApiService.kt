@@ -7,15 +7,19 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ApiService {
+interface ApiServiceInterface {
+    fun getAllCoins(): Observable<List<CoinModel>>
+}
+
+class ApiService: ApiServiceInterface {
 
     // Private Properties
 
     private val baseUrl = "https://api.coinmarketcap.com/"
 
-    // Internal Methods
+    // Public Methods
 
-    internal fun getAllCoins(): Observable<List<CoinModel>> {
+    override fun getAllCoins(): Observable<List<CoinModel>> {
 
         val retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
