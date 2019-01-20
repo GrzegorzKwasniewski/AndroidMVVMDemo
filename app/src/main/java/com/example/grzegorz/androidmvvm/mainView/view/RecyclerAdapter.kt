@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.grzegorz.androidmvvm.R
 import com.example.grzegorz.androidmvvm.helpers.inflate
 import com.example.grzegorz.androidmvvm.mainView.model.CoinModel
+import kotlinx.android.synthetic.main.recyclerview_item_row.view.*
 
-class RecyclerAdapter(private val menuItems: List<CoinModel>) : RecyclerView.Adapter<RecyclerAdapter.CoinHolder>() {
+class RecyclerAdapter(private val coins: List<CoinModel>) : RecyclerView.Adapter<RecyclerAdapter.CoinHolder>() {
 
     override fun getItemViewType(position: Int): Int {
         return position
@@ -18,10 +19,10 @@ class RecyclerAdapter(private val menuItems: List<CoinModel>) : RecyclerView.Ada
         return CoinHolder(inflatedView)
     }
 
-    override fun getItemCount() = menuItems.size
+    override fun getItemCount() = coins.size
 
     override fun onBindViewHolder(holder: RecyclerAdapter.CoinHolder, position: Int) {
-        val itemPhoto = menuItems[position]
+        val itemPhoto = coins[position]
         holder.bindCoin(itemPhoto)
     }
 
@@ -39,7 +40,10 @@ class RecyclerAdapter(private val menuItems: List<CoinModel>) : RecyclerView.Ada
         }
 
         fun bindCoin(coin: CoinModel) {
+            this.coin = coin
 
+            view.coinName.text = coin.name
+            view.coinPrice.text = coin.priceUsd
         }
     }
 }

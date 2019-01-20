@@ -2,10 +2,11 @@ package com.example.grzegorz.androidmvvm.mainView.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grzegorz.androidmvvm.R
-import com.example.grzegorz.androidmvvm.helpers.getViewModel
 import com.example.grzegorz.androidmvvm.helpers.subscribe
 import com.example.grzegorz.androidmvvm.mainView.model.CoinModel
+import com.example.grzegorz.androidmvvm.mainView.network.ApiService
 import com.example.grzegorz.androidmvvm.mainView.viewModel.MainViewModel
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,11 +17,12 @@ class MainActivity : AppCompatActivity() {
 
     // View Model
 
-    private val viewModel by lazy { getViewModel<MainViewModel>() }
+    private val viewModel = MainViewModel(ApiService())
 
     // Private Properties
 
     private var disposable: Disposable? = null
+    private lateinit var linearLayoutManager: LinearLayoutManager
 
     // View Life Cycle
 
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         bindUIData()
         bindUIGestures()
+        setupRecyclerView()
     }
 
     override fun onPause() {
@@ -43,15 +46,22 @@ class MainActivity : AppCompatActivity() {
         viewModel.coins.subscribe(this, this::showAllCoins)
     }
 
-    private fun showAllCoins(coins: List<CoinModel>) {
-
-    }
-
     private fun bindUIGestures() {
         disposable = downloadButton.clicks()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 viewModel.getCoinsData()
             }
+    }
+
+    private fun setupRecyclerView() {
+        linearLayoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = linearLayoutManager
+    }
+
+    // View Model Binding
+
+    private fun showAllCoins(coins: List<CoinModel>) {
+        recyclerView.adapter = RecyclerAdapter(coins)
     }
 }

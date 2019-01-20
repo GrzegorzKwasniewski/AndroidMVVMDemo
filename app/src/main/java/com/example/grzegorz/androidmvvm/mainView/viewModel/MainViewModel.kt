@@ -4,7 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.grzegorz.androidmvvm.mainView.model.CoinModel
 import com.example.grzegorz.androidmvvm.mainView.network.ApiService
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 class MainViewModel(
     private val apiService: ApiService
@@ -12,6 +14,7 @@ class MainViewModel(
 
     // Internal Properties
 
+    // Public is default
     internal val coins = MutableLiveData<List<CoinModel>>()
 
     // Private Properties
@@ -25,8 +28,10 @@ class MainViewModel(
         disposable?.dispose()
 
         disposable = apiService.getAllCoins()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-
+                coins.value = it
             }
     }
 
