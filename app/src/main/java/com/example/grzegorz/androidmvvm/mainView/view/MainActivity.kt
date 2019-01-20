@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grzegorz.androidmvvm.R
+import com.example.grzegorz.androidmvvm.helpers.show
 import com.example.grzegorz.androidmvvm.helpers.subscribe
 import com.example.grzegorz.androidmvvm.mainView.model.CoinModel
 import com.example.grzegorz.androidmvvm.mainView.network.ApiService
@@ -44,6 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun bindUIData() {
         viewModel.coins.subscribe(this, this::showAllCoins)
+        viewModel.progress.subscribe(this, this::updateProgress)
     }
 
     private fun bindUIGestures() {
@@ -63,5 +65,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun showAllCoins(coins: List<CoinModel>) {
         recyclerView.adapter = RecyclerAdapter(coins)
+    }
+
+    private fun updateProgress(isDownloading: Boolean) {
+        progressBar.show(isDownloading)
     }
 }

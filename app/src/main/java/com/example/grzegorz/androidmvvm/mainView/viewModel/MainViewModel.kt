@@ -2,6 +2,7 @@ package com.example.grzegorz.androidmvvm.mainView.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.grzegorz.androidmvvm.helpers.withProgress
 import com.example.grzegorz.androidmvvm.mainView.model.CoinModel
 import com.example.grzegorz.androidmvvm.mainView.network.ApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,6 +17,7 @@ class MainViewModel(
 
     // Public is default
     internal val coins = MutableLiveData<List<CoinModel>>()
+    internal val progress = MutableLiveData<Boolean>(false)
 
     // Private Properties
 
@@ -30,13 +32,14 @@ class MainViewModel(
         disposable = apiService.getAllCoins()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .withProgress(progress)
             .subscribe {
                 coins.value = it
             }
     }
 
     override fun onCleared() {
-        super.onCleared()
         disposable?.dispose()
+        super.onCleared()
     }
 }
