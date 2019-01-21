@@ -11,11 +11,9 @@ interface ApiServiceInterface {
     fun getAllCoins(): Observable<List<CoinModel>>
 }
 
-class ApiService: ApiServiceInterface {
-
-    // Private Properties
-
-    private val baseUrl = "https://api.coinmarketcap.com/"
+class ApiService(
+    private val baseUrl: String = "https://api.coinmarketcap.com/"
+): ApiServiceInterface {
 
     // Public Methods
 
