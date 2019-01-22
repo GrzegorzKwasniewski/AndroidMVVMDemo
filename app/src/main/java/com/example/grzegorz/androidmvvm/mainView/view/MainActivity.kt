@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grzegorz.androidmvvm.R
+import com.example.grzegorz.androidmvvm.helpers.ErrorMessage
 import com.example.grzegorz.androidmvvm.helpers.show
 import com.example.grzegorz.androidmvvm.helpers.subscribe
 import com.example.grzegorz.androidmvvm.mainView.model.CoinModel
@@ -46,6 +47,7 @@ class MainActivity: AppCompatActivity() {
     private fun bindUIData() {
         viewModel.coins.subscribe(this, this::showAllCoins)
         viewModel.progress.subscribe(this, this::updateProgress)
+        viewModel.errors.subscribe(this, this::showErrorMessage)
     }
 
     private fun bindUIGestures() {
@@ -68,5 +70,8 @@ class MainActivity: AppCompatActivity() {
 
     private fun updateProgress(isDownloading: Boolean) {
         progressBar.show(isDownloading)
+    }
+
+    private fun showErrorMessage(error: ErrorMessage) {
     }
 }

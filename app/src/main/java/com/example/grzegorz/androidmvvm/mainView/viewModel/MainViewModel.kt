@@ -2,6 +2,8 @@ package com.example.grzegorz.androidmvvm.mainView.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.grzegorz.androidmvvm.helpers.ErrorMessage
+import com.example.grzegorz.androidmvvm.helpers.showErrorMessages
 import com.example.grzegorz.androidmvvm.helpers.withProgress
 import com.example.grzegorz.androidmvvm.mainView.model.CoinModel
 import com.example.grzegorz.androidmvvm.mainView.network.ApiServiceInterface
@@ -18,6 +20,11 @@ class MainViewModel(
     // Public is default
     internal val coins = MutableLiveData<List<CoinModel>>()
     internal val progress = MutableLiveData<Boolean>(false)
+    internal val errors = MutableLiveData<ErrorMessage>()
+
+
+    internal val coinsCount: Int
+        get() = coins.value?.count() ?: 0
 
     // Private Properties
 
@@ -33,6 +40,7 @@ class MainViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .withProgress(progress)
+            .showErrorMessages(errors)
             .subscribe {
                 coins.value = it
             }

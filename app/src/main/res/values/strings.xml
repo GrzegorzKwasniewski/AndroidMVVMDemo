@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AndroidMVVM</string>
+    <string name="default_error">Network error</string>
 </resources>

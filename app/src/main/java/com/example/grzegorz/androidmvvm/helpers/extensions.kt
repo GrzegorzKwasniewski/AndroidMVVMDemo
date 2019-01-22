@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.annotation.StringRes
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.example.grzegorz.androidmvvm.R
 import io.reactivex.Observable
 
 fun <T> Observable<T>.withProgress(
@@ -19,6 +21,20 @@ fun <T> Observable<T>.withProgress(
             mutableLiveData.postValue(true)
         }.doAfterTerminate {
             mutableLiveData.postValue(false)
+        }
+    }
+}
+
+fun <T> Observable<T>.showErrorMessages(
+    mutableLiveData: MutableLiveData<ErrorMessage>
+): Observable<T> {
+
+    return compose {
+        it.doOnError { error ->
+
+            mutableLiveData.postValue(
+                ErrorMessage(error.localizedMessage)
+            )
         }
     }
 }
