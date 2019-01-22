@@ -6,13 +6,14 @@ import com.example.grzegorz.androidmvvm.helpers.ErrorMessage
 import com.example.grzegorz.androidmvvm.helpers.showErrorMessages
 import com.example.grzegorz.androidmvvm.helpers.withProgress
 import com.example.grzegorz.androidmvvm.mainView.model.CoinModel
+import com.example.grzegorz.androidmvvm.mainView.network.ApiService
 import com.example.grzegorz.androidmvvm.mainView.network.ApiServiceInterface
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class MainViewModel(
-    private val apiService: ApiServiceInterface
+    private val apiService: ApiServiceInterface = ApiService()
 ): ViewModel() {
 
     // Internal Properties

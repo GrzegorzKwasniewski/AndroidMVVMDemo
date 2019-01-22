@@ -8,7 +8,6 @@ import com.example.grzegorz.androidmvvm.helpers.ErrorMessage
 import com.example.grzegorz.androidmvvm.helpers.show
 import com.example.grzegorz.androidmvvm.helpers.subscribe
 import com.example.grzegorz.androidmvvm.mainView.model.CoinModel
-import com.example.grzegorz.androidmvvm.mainView.network.ApiService
 import com.example.grzegorz.androidmvvm.mainView.viewModel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
@@ -20,7 +19,7 @@ class MainActivity: AppCompatActivity() {
 
     // View Model
 
-    private val viewModel = MainViewModel(ApiService())
+    private val viewModel = MainViewModel()
 
     // Private Properties
 
