@@ -10,6 +10,7 @@ import com.example.grzegorz.androidmvvm.helpers.subscribe
 import com.example.grzegorz.androidmvvm.mainView.model.CoinModel
 import com.example.grzegorz.androidmvvm.mainView.network.ApiService
 import com.example.grzegorz.androidmvvm.mainView.viewModel.MainViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -73,5 +74,10 @@ class MainActivity: AppCompatActivity() {
     }
 
     private fun showErrorMessage(error: ErrorMessage) {
+        Snackbar.make(
+            rootLayout,
+            error.getMessage(),
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 }

@@ -1,27 +1,15 @@
 package com.example.grzegorz.androidmvvm.helpers
 
-import android.content.res.Resources
-import androidx.annotation.StringRes
-import com.example.grzegorz.androidmvvm.R
 
 class ErrorMessage {
 
-    @StringRes
-    private val resource: Int?
-    private val message: String?
+    private val message: String
 
-    fun getMessage(resources: Resources): String? {
-        return message ?: if (resource != null) resources.getString(resource)
-        else null
+    fun getMessage(): String {
+        return message
     }
 
-    constructor(@StringRes res: Int = R.string.default_error) {
-        resource = res
-        message = null
-    }
-
-    constructor(text: String, code: Int? = null) {
+    constructor(text: String) {
         this.message = text
-        resource = null
     }
 }
