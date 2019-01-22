@@ -9,6 +9,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 fun <T> Observable<T>.withProgress(
     mutableLiveData: MutableLiveData<Boolean>
@@ -36,6 +38,12 @@ fun <T> Observable<T>.showErrorMessages(
         }
     }
 }
+
+fun <T> Observable<T>.observeOnMainThread(): Observable<T> =
+    observeOn(AndroidSchedulers.mainThread())
+
+fun <T> Observable<T>.subscribeOnIOThread(): Observable<T> =
+    subscribeOn(Schedulers.io())
 
 fun View.show(show: Boolean) {
     if (show) {

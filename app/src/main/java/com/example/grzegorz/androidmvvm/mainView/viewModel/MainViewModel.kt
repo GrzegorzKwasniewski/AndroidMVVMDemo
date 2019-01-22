@@ -2,9 +2,7 @@ package com.example.grzegorz.androidmvvm.mainView.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.grzegorz.androidmvvm.helpers.ErrorMessage
-import com.example.grzegorz.androidmvvm.helpers.showErrorMessages
-import com.example.grzegorz.androidmvvm.helpers.withProgress
+import com.example.grzegorz.androidmvvm.helpers.*
 import com.example.grzegorz.androidmvvm.mainView.model.CoinModel
 import com.example.grzegorz.androidmvvm.mainView.network.ApiService
 import com.example.grzegorz.androidmvvm.mainView.network.ApiServiceInterface
@@ -38,8 +36,8 @@ class MainViewModel(
         disposable?.dispose()
 
         disposable = apiService.getAllCoins()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOnIOThread()
+            .observeOnMainThread()
             .withProgress(progress)
             .showErrorMessages(errors)
             .subscribe {

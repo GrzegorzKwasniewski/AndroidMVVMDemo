@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grzegorz.androidmvvm.R
 import com.example.grzegorz.androidmvvm.helpers.ErrorMessage
+import com.example.grzegorz.androidmvvm.helpers.observeOnMainThread
 import com.example.grzegorz.androidmvvm.helpers.show
 import com.example.grzegorz.androidmvvm.helpers.subscribe
 import com.example.grzegorz.androidmvvm.mainView.model.CoinModel
@@ -52,7 +53,7 @@ class MainActivity: AppCompatActivity() {
 
     private fun bindUIGestures() {
         disposable = downloadButton.clicks()
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOnMainThread()
             .subscribe {
                 viewModel.getCoinsData()
             }
