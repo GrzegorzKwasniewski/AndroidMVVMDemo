@@ -28,10 +28,16 @@ class ExampleUnitTest {
 
     @Test
     fun viewModelTest() {
+
+        val initialCount = viewModel.coinsCount
+
         viewModel.getCoinsData()
 
-        assertEquals(viewModel.coinsCount, 2)
-        assertTrue(viewModel.coinsCount > 0)
+        //assertEquals(viewModel.coinsCount, 2)
+        assertTrue(viewModel.coinsCount > initialCount)
+
+        assertFalse(viewModel.progress.value!!)
+        assertEquals(viewModel.errors.value?.getMessage(), null)
     }
 
     @Test
