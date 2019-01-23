@@ -10,17 +10,16 @@ import com.example.grzegorz.androidmvvm.helpers.show
 import com.example.grzegorz.androidmvvm.helpers.subscribe
 import com.example.grzegorz.androidmvvm.mainView.model.CoinModel
 import com.example.grzegorz.androidmvvm.mainView.viewModel.MainViewModel
+import com.example.grzegorz.androidmvvm.mainView.viewModel.MainViewModelInterface
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity: AppCompatActivity() {
-
-    // View Model
-
-    private val viewModel = MainViewModel()
+class MainActivity(
+    private val viewModel: MainViewModelInterface = MainViewModel()
+): AppCompatActivity() {
 
     // Private Properties
 

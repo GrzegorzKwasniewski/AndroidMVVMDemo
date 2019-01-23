@@ -6,23 +6,28 @@ import com.example.grzegorz.androidmvvm.helpers.*
 import com.example.grzegorz.androidmvvm.mainView.model.CoinModel
 import com.example.grzegorz.androidmvvm.mainView.network.ApiService
 import com.example.grzegorz.androidmvvm.mainView.network.ApiServiceInterface
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+
+interface MainViewModelInterface {
+    val coins: MutableLiveData<List<CoinModel>>
+    val progress: MutableLiveData<Boolean>
+    val errors: MutableLiveData<ErrorMessage>
+    val coinsCount: Int
+
+    fun getCoinsData()
+}
 
 class MainViewModel(
     private val apiService: ApiServiceInterface = ApiService()
-): ViewModel() {
+): ViewModel(), MainViewModelInterface {
 
-    // Internal Properties
+    // Public Properties
 
-    // Public is default
-    internal val coins = MutableLiveData<List<CoinModel>>()
-    internal val progress = MutableLiveData<Boolean>(false)
-    internal val errors = MutableLiveData<ErrorMessage>()
+    override val coins = MutableLiveData<List<CoinModel>>()
+    override val progress = MutableLiveData<Boolean>(false)
+    override val errors = MutableLiveData<ErrorMessage>()
 
-
-    internal val coinsCount: Int
+    override val coinsCount: Int
         get() = coins.value?.count() ?: 0
 
     // Private Properties
@@ -31,7 +36,7 @@ class MainViewModel(
 
     // Internal Methods
 
-    internal fun getCoinsData() {
+    override fun getCoinsData() {
 
         disposable?.dispose()
 
