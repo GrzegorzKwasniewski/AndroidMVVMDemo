@@ -8,9 +8,11 @@ import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.internal.schedulers.ExecutorScheduler
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.example.grzegorz.androidmvvm.mainView.model.CoinModel
 import com.example.grzegorz.androidmvvm.mainView.network.ApiService
 import io.reactivex.disposables.Disposable
 import io.reactivex.Scheduler
+import io.reactivex.observers.TestObserver
 import java.util.concurrent.Executor
 import java.util.concurrent.TimeUnit
 import org.junit.BeforeClass
@@ -25,6 +27,7 @@ class ExampleUnitTest {
     private val viewModel = MainViewModel(ApiServiceMock())
     private val apiService = ApiService()
 
+    private val testObserver = TestObserver<List<CoinModel>>()
 
     @Test
     fun viewModelTest() {
@@ -46,6 +49,16 @@ class ExampleUnitTest {
             .subscribe {
                 assertTrue(it.count() > 0)
             }
+    }
+
+    @Test
+    fun observableApiTest() {
+        apiService.getAllCoins()
+            .subscribe(testObserver)
+
+        testObserver.assertSubscribed()
+            .assertComplete()
+            .assertNoErrors()
     }
 
 
