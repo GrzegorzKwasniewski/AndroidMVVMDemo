@@ -25,7 +25,7 @@ class ExampleUnitTest {
     val rule = InstantTaskExecutorRule()
 
     private val viewModel = MainViewModel(ApiServiceMock())
-    private val apiService = ApiService()
+    private val apiService = ApiService("http://localhost:1234/androidmvvmdemo/")
 
     private val testObserver = TestObserver<List<CoinModel>>()
 

@@ -48,6 +48,12 @@ dependencies {
     // Android KTX
     implementation 'androidx.core:core-ktx:1.1.0-alpha03'
 
+    // Retrofit
+    final RETROFIT_VERSION = "2.4.0"
+    implementation "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+    implementation "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$RETROFIT_VERSION"
+
     // Testing
 
     testImplementation 'junit:junit:4.12'
