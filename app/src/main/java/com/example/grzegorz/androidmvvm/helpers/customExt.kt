@@ -17,6 +17,8 @@ fun View.show(show: Boolean) {
     }
 }
 
+// Crossinline helps avoiding non-local control flow.
+
 inline fun <T> LiveData<T>.subscribe(lifecycle: LifecycleOwner, crossinline onChanged: (T) -> Unit) {
     observe(lifecycle, Observer { it?.run(onChanged) })
 }

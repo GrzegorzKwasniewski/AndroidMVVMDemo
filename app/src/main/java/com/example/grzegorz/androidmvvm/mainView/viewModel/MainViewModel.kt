@@ -1,5 +1,6 @@
 package com.example.grzegorz.androidmvvm.mainView.viewModel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.grzegorz.androidmvvm.helpers.*
@@ -9,9 +10,9 @@ import com.example.grzegorz.androidmvvm.mainView.network.ApiServiceInterface
 import io.reactivex.disposables.Disposable
 
 interface MainViewModelInterface {
-    val coins: MutableLiveData<List<CoinModel>>
-    val progress: MutableLiveData<Boolean>
-    val errors: MutableLiveData<ErrorMessage>
+    val coins: LiveData<List<CoinModel>>
+    val progress: LiveData<Boolean>
+    val errors: LiveData<ErrorMessage>
     val coinsCount: Int
 
     fun getCoinsData()
@@ -23,14 +24,23 @@ class MainViewModel(
 
     // Public Properties
 
-    override val coins = MutableLiveData<List<CoinModel>>()
-    override val progress = MutableLiveData<Boolean>(false)
-    override val errors = MutableLiveData<ErrorMessage>()
+    override val coins: LiveData<List<CoinModel>>
+        get() = coinsData
+
+    override val progress: LiveData<Boolean>
+        get() = progressData
+
+    override val errors: LiveData<ErrorMessage>
+        get() = errorsData
 
     override val coinsCount: Int
-        get() = coins.value?.count() ?: 0
+        get() = coinsData.value?.count() ?: 0
 
     // Private Properties
+
+    private val coinsData = MutableLiveData<List<CoinModel>>()
+    private val progressData = MutableLiveData<Boolean>(false)
+    private val errorsData = MutableLiveData<ErrorMessage>()
 
     private var disposable: Disposable? = null
 
@@ -43,10 +53,10 @@ class MainViewModel(
         disposable = apiService.getAllCoins()
             .subscribeOnIOThread()
             .observeOnMainThread()
-            .withProgress(progress)
-            .showErrorMessages(errors)
+            .withProgress(progressData)
+            .showErrorMessages(errorsData)
             .subscribe {
-                coins.value = it
+                coinsData.value = it
             }
     }
 
